@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ - SHUTO SHIMIZU Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2c2c2c;
+      --secondary-color: #ffffff;
+      --accent-color: #e6b980;
+      --text-color: #333;
+      --soft-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      --transition-speed: 0.3s;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans JP', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    .contact-container {
+      width: 100%;
+      max-width: 600px;
+      padding: 2rem;
+    }
+
+    .contact-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      transform-style: preserve-3d;
+    }
+
+    .contact-box:hover {
+      transform: translateY(-5px) rotateX(2deg);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    .contact-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .contact-title h1 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-title::after {
+      content: '';
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: var(--accent-color);
+      border-radius: 2px;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      color: var(--text-color);
+      font-weight: 500;
+      transition: color var(--transition-speed);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #eee;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: all var(--transition-speed);
+      background: rgba(255, 255, 255, 0.9);
+      font-family: 'Noto Sans JP', Arial, sans-serif;
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(230, 185, 128, 0.2);
+    }
+
+    .form-group input:focus + label,
+    .form-group textarea:focus + label {
+      color: var(--accent-color);
+    }
+
+    .button {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .button:hover {
+      background: #444;
+      transform: translateY(-2px);
+    }
+
+    .button:active::after {
+      width: 200px;
+      height: 200px;
+      opacity: 0;
+    }
+
+    .message {
+      margin-top: 1.5rem;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all var(--transition-speed);
+    }
+
+    .error-message {
+      background: rgba(255, 68, 68, 0.1);
+      color: #ff4444;
+      display: none;
+    }
+
+    .success-message {
+      background: rgba(76, 175, 80, 0.1);
+      color: #4CAF50;
+      display: none;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .loading {
+      position: relative;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s infinite linear;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .contact-container {
+        padding: 1rem;
+      }
+
+      .contact-box {
+        padding: 2rem;
+      }
+
+      .contact-title h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="contact-container">
+    <div class="contact-box">
+      <div class="contact-title">
+        <h1>お問い合わせ</h1>
+      </div>
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="name">お名前</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">メールアドレス</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message">メッセージ</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <button type="submit" class="button">送信する</button>
+      </form>
+      <p id="success-message" class="message success-message"></p>
+      <p id="error-message" class="message error-message"></p>
+    </div>
+  </div>
+
+  <script type="module">
+    function showMessage(element, message) {
+      element.textContent = message;
+      element.style.display = 'block';
+      element.classList.add('show');
+      
+      if (element.classList.contains('success-message')) {
+        setTimeout(() => {
+          element.classList.remove('show');
+          setTimeout(() => {
+            element.style.display = 'none';
+          }, 300);
+        }, 3000);
+      }
+    }
+
+    function setLoading(button, isLoading) {
+      if (isLoading) {
+        button.classList.add('loading');
+        button.disabled = true;
+        button.originalText = button.textContent;
+        button.textContent = '';
+      } else {
+        button.classList.remove('loading');
+        button.disabled = false;
+        button.textContent = button.originalText;
+      }
+    }
+
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitButton = e.target.querySelector('button[type="submit"]');
+      const successMessage = document.getElementById('success-message');
+      const errorMessage = document.getElementById('error-message');
+      
+      setLoading(submitButton, true);
+
+      try {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        const response = await fetch('/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message })
+        });
+
+        if (response.ok) {
+          showMessage(successMessage, 'お問い合わせを送信しました。');
+          errorMessage.style.display = 'none';
+          e.target.reset();
+        } else {
+          throw new Error('送信に失敗しました');
+        }
+      } catch (error) {
+        showMessage(errorMessage, '送信に失敗しました。時間をおいて再度お試しください。');
+        successMessage.style.display = 'none';
+      } finally {
+        setLoading(submitButton, false);
+      }
+    });
+
+    // 入力フィールドのフォーカス効果
+    document.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.classList.add('focused');
+      });
+      
+      input.addEventListener('blur', () => {
+        input.parentElement.classList.remove('focused');
+      });
+    });
+  </script>
+</body>
+</html> 

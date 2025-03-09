@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SHUTO SHIMIZU - サービス設計/ブランディング事例">
+  <title>サービス設計 - SHUTO SHIMIZU Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2c2c2c;
+      --secondary-color: #ffffff;
+      --accent-color: #e6b980;
+      --text-color: #333;
+      --soft-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans JP', Arial, sans-serif;
+      box-sizing: border-box;
+      color: var(--text-color);
+      line-height: 1.6;
+      background-color: var(--secondary-color);
+    }
+
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .back-button:hover {
+      background: var(--primary-color);
+      color: var(--secondary-color);
+    }
+
+    .project-header {
+      height: 60vh;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .project-title {
+      color: white;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-title h1 {
+      font-size: 3rem;
+      margin: 0;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .project-title p {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      font-weight: 300;
+    }
+
+    .project-content {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .project-section {
+      margin-bottom: 4rem;
+    }
+
+    .project-section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .project-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 3rem;
+      height: 2px;
+      background-color: var(--accent-color);
+    }
+
+    .project-section p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-image {
+      width: 100%;
+      margin: 2rem 0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .project-title h1 {
+        font-size: 2rem;
+      }
+
+      .project-title p {
+        font-size: 1rem;
+      }
+
+      .project-content {
+        padding: 0 1.5rem;
+      }
+
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">← 戻る</a>
+
+  <header class="project-header">
+    <img src="work1.jpeg" alt="CHVサービス設計">
+    <div class="project-title">
+      <h1>サービス設計 / ブランディング</h1>
+      <p>音楽を通じて人々をつなぐサービスの設計とブランディング</p>
+    </div>
+  </header>
+
+  <main class="project-content">
+    <section class="project-section">
+      <h2>プロジェクトの概要</h2>
+      <p>すれ違い通信を通して瞬間的に誰かの音楽世界を体感できるアプリケーションの設計とブランディングを担当しました。音楽を通じて人々の心をつなぎ、新しい出会いと発見を生み出すことを目指しています。</p>
+    </section>
+
+    <section class="project-section">
+      <h2>デザインプロセス</h2>
+      <p>ユーザーの行動と感情を深く理解するためのリサーチから始め、直感的なインターフェースと心地よい体験を追求しました。ロゴデザインでは、音楽の流れと人々のつながりを表現しています。</p>
+      <div class="project-image">
+        <img src="work3.png" alt="デザインプロセスの詳細">
+      </div>
+    </section>
+
+    <section class="project-section">
+      <h2>成果と学び</h2>
+      <p>本プロジェクトを通じて、音楽体験における「つながり」の重要性と、それを実現するためのUXデザインの可能性を探求しました。ユーザーの感情に寄り添いながら、技術的な実現可能性とのバランスを取ることの大切さを学びました。</p>
+      <div class="project-image">
+        <img src="work2.jpg" alt="プロジェクトの成果">
+      </div>
+    </section>
+  </main>
+</body>
+</html> 

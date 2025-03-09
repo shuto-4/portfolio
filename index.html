@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SHUTO SHIMIZU - クリエイティブデザイナー/UXデザイナーのポートフォリオサイト">
+  <title>Portfolio - SHUTO SHIMIZU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <script type="module" src="firebase-config.js"></script>
+  <style>
+    :root {
+      --primary-color: #2c2c2c;
+      --secondary-color: #ffffff;
+      --accent-color: #e6b980;
+      --text-color: #333;
+      --soft-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans JP', Arial, sans-serif;
+      box-sizing: border-box;
+      color: var(--text-color);
+      line-height: 1.6;
+      background-color: var(--secondary-color);
+    }
+
+    .hero-container {
+      max-width: 1920px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 2rem;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .brand h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1.8rem;
+      margin: 0;
+      letter-spacing: 2px;
+    }
+
+    .brand h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      margin: 0;
+      letter-spacing: 4px;
+      color: #666;
+    }
+
+    .brand p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin-top: 2rem;
+      font-weight: 300;
+    }
+
+    .menu-button {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      color: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .menu-button:hover {
+      transform: scale(1.1);
+    }
+
+    .hero-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-main img {
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .vertical-text {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      font-size: 1.5rem;
+      letter-spacing: 0.5rem;
+      padding: 2rem 0;
+      display: flex;
+      align-items: center;
+      font-weight: 300;
+    }
+
+    .navigation {
+      position: absolute;
+      bottom: 4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-button {
+      padding: 1rem 2rem;
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-button:hover {
+      background: var(--primary-color);
+      color: var(--secondary-color);
+    }
+
+    @media (max-width: 1200px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+      }
+
+      .brand {
+        text-align: center;
+        align-items: center;
+      }
+
+      .vertical-text {
+        writing-mode: horizontal-tb;
+        text-orientation: mixed;
+        padding: 2rem 0;
+        justify-content: center;
+      }
+
+      .navigation {
+        position: relative;
+        bottom: auto;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .menu-button {
+        width: 50px;
+        height: 50px;
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+
+    .works-section {
+      text-align: center;
+      padding: 8rem 2rem;
+      background-color: var(--secondary-color);
+    }
+
+    .works-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 4rem;
+      color: var(--primary-color);
+    }
+
+    .works-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .work-item {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--soft-shadow);
+      transition: all 0.3s ease;
+    }
+
+    .work-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .work-item a {
+      text-decoration: none;
+      color: var(--text-color);
+    }
+
+    .work-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .work-item-content {
+      padding: 2rem;
+    }
+
+    .work-item h3 {
+      font-size: 1.2rem;
+      margin: 0 0 1rem 0;
+      font-weight: 600;
+    }
+
+    .work-item p {
+      font-size: 0.9rem;
+      margin: 0;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .works-gallery {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+      }
+    }
+
+    .about-section {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 8rem 2rem;
+      text-align: center;
+    }
+
+    .about-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      font-weight: 600;
+    }
+
+    .about-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-text {
+      text-align: left;
+    }
+
+    .about-image {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .about-name {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+
+    .about-name-en {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      margin-top: 0.5rem;
+      opacity: 0.8;
+    }
+
+    .about-description {
+      font-size: 1.1rem;
+      line-height: 2;
+      margin: 2rem 0;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+
+    .about-philosophy {
+      font-size: 1.2rem;
+      margin-top: 3rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 968px) {
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-text {
+        text-align: center;
+      }
+
+      .about-image {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    .skills-section {
+      text-align: center;
+      padding: 8rem 2rem;
+      background-color: var(--secondary-color);
+    }
+
+    .skills-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 4rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .skills-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .skills-item {
+      padding: 3rem 2rem;
+      background: var(--secondary-color);
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      box-shadow: var(--soft-shadow);
+      text-align: left;
+    }
+
+    .skills-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .skills-item h3 {
+      font-size: 1.3rem;
+      margin: 0 0 1.5rem 0;
+      font-weight: 600;
+      color: var(--primary-color);
+      text-align: center;
+    }
+
+    .skills-item p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #666;
+      margin: 0;
+    }
+
+    .contact-section {
+      text-align: center;
+      padding: 8rem 2rem;
+      background: var(--secondary-color);
+    }
+
+    .contact-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 4rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .contact-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-box {
+      background: var(--secondary-color);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: var(--soft-shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .contact-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      color: var(--text-color);
+      font-weight: 500;
+      text-align: left;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #eee;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: all 0.3s;
+      background: rgba(255, 255, 255, 0.9);
+      font-family: 'Noto Sans JP', Arial, sans-serif;
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(230, 185, 128, 0.2);
+    }
+
+    .button {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .button:hover {
+      background: #444;
+      transform: translateY(-2px);
+    }
+
+    .message {
+      margin-top: 1.5rem;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s;
+    }
+
+    .error-message {
+      background: rgba(255, 68, 68, 0.1);
+      color: #ff4444;
+      display: none;
+    }
+
+    .success-message {
+      background: rgba(76, 175, 80, 0.1);
+      color: #4CAF50;
+      display: none;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .loading {
+      position: relative;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s infinite linear;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--primary-color);
+      color: white;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 768px) {
+      .contact-container {
+        padding: 0 1rem;
+      }
+
+      .contact-box {
+        padding: 2rem;
+      }
+
+      .contact-section h2 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-container">
+    <div class="brand">
+      <h1>SHUTO SHIMIZU</h1>
+      <h2>PORTFOLIO</h2>
+      <p>クリエイティブデザインと体験設計を通じて、<br>人々の心に響くソリューションを提供します。</p>
+    </div>
+
+    <div class="hero-main">
+      <img src="profile.jpg" alt="Shuto Shimizu">
+    </div>
+
+    <div class="vertical-text">
+      こころに残る体験設計を
+    </div>
+
+    <div class="menu-button">MENU</div>
+
+    <nav class="navigation">
+      <a href="#works" class="nav-button">制作物</a>
+      <a href="#about" class="nav-button">自己紹介</a>
+      <a href="#skills" class="nav-button">スキル</a>
+    </nav>
+  </div>
+
+  <section id="works" class="works-section">
+    <h2>Works</h2>
+    <div class="works-gallery">
+      <div class="work-item">
+        <a href="service-design.html">
+          <img src="work1.jpeg" alt="CHVロゴデザイン">
+          <div class="work-item-content">
+            <h3>サービス設計 / ブランディング</h3>
+            <p>音楽を通じて人々をつなぐサービスの設計とブランディング</p>
+          </div>
+        </a>
+      </div>
+      <div class="work-item">
+        <a href="logo-design.html">
+          <div style="background: var(--primary-color); padding: 2rem; height: 250px; display: flex; align-items: center; justify-content: center;">
+            <img src="カメレオンロゴ２-04.png" alt="Vivixyロゴ" style="width: auto; height: auto; max-height: 100%; object-fit: contain;">
+          </div>
+          <div class="work-item-content">
+            <h3>ロゴ制作</h3>
+            <p>シンプルでありながら印象的なロゴデザイン。ペンギンのモチーフを用いて、愛らしさと独創性を表現しています。</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about-section">
+    <h2>私について</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <div class="about-name">
+          清水 秀人
+          <div class="about-name-en">SHUTO SHIMIZU</div>
+        </div>
+        <div class="about-description">
+          武蔵野美術大学 クリエイティブイノベーション学科 4年生
+        </div>
+        <div class="about-philosophy">
+          心に残る体験設計のために<br>
+          様々な手法、知見を用いてアプローチしています。<br>
+          多様な分野での経験を通じて、<br>
+          常に新しいデザインを追求しています。
+        </div>
+      </div>
+      <div class="about-image">
+        <img src="IMG_2533.JPG" alt="Shuto Shimizu">
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="skills-section">
+    <h2>できること</h2>
+    <div class="skills-list">
+      <div class="skills-item">
+        <h3>UI/UXデザイン</h3>
+        <p>ユーザビリティを重視したインターフェースデザイン。<br>
+        ユーザー調査からプロトタイプ作成まで、<br>
+        体験価値を高めるデザインプロセスを実践。</p>
+      </div>
+      <div class="skills-item">
+        <h3>グラフィックデザイン</h3>
+        <p>ロゴ、ブランドアイデンティティ、販促物など、<br>
+        目的に応じた効果的なビジュアルデザイン。<br>
+        クライアントの想いを形にする提案力。</p>
+      </div>
+      <div class="skills-item">
+        <h3>写真・映像制作</h3>
+        <p>商品撮影やポートレートなどの写真撮影、<br>
+        シンプルな映像作品の撮影から編集まで、<br>
+        基本的な制作に対応可能。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <h2>お問い合わせ</h2>
+    <div class="contact-container">
+      <div class="contact-box">
+        <form id="contact-form">
+          <div class="form-group">
+            <label for="name">お名前</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">メールアドレス</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="message">メッセージ</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+
+          <button type="submit" class="button">送信する</button>
+        </form>
+        <p id="success-message" class="message success-message"></p>
+        <p id="error-message" class="message error-message"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>THANK YOU</p>
+    <p>お問い合わせ: <a href="mailto:s.shimizu@vivixy.co.jp" style="color: white;">s.shimizu@vivixy.co.jp</a></p>
+  </footer>
+
+  <script>
+    function showMessage(element, message) {
+      element.textContent = message;
+      element.style.display = 'block';
+      element.classList.add('show');
+      
+      if (element.classList.contains('success-message')) {
+        setTimeout(() => {
+          element.classList.remove('show');
+          setTimeout(() => {
+            element.style.display = 'none';
+          }, 300);
+        }, 3000);
+      }
+    }
+
+    function setLoading(button, isLoading) {
+      if (isLoading) {
+        button.classList.add('loading');
+        button.disabled = true;
+        button.originalText = button.textContent;
+        button.textContent = '';
+      } else {
+        button.classList.remove('loading');
+        button.disabled = false;
+        button.textContent = button.originalText;
+      }
+    }
+
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitButton = e.target.querySelector('button[type="submit"]');
+      const successMessage = document.getElementById('success-message');
+      const errorMessage = document.getElementById('error-message');
+      
+      setLoading(submitButton, true);
+
+      try {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        const response = await fetch('/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message })
+        });
+
+        if (response.ok) {
+          showMessage(successMessage, 'お問い合わせを送信しました。');
+          errorMessage.style.display = 'none';
+          e.target.reset();
+        } else {
+          throw new Error('送信に失敗しました');
+        }
+      } catch (error) {
+        showMessage(errorMessage, '送信に失敗しました。時間をおいて再度お試しください。');
+        successMessage.style.display = 'none';
+      } finally {
+        setLoading(submitButton, false);
+      }
+    });
+
+    // 入力フィールドのフォーカス効果
+    document.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.classList.add('focused');
+      });
+      
+      input.addEventListener('blur', () => {
+        input.parentElement.classList.remove('focused');
+      });
+    });
+  </script>
+</body>
+</html> 

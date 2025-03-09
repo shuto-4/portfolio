@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SHUTO SHIMIZU - ロゴ制作事例">
+  <title>ロゴ制作 - SHUTO SHIMIZU Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2c2c2c;
+      --secondary-color: #ffffff;
+      --accent-color: #e6b980;
+      --text-color: #333;
+      --soft-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans JP', Arial, sans-serif;
+      box-sizing: border-box;
+      color: var(--text-color);
+      line-height: 1.6;
+      background-color: var(--secondary-color);
+    }
+
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .back-button:hover {
+      background: var(--primary-color);
+      color: var(--secondary-color);
+    }
+
+    .project-header {
+      height: 60vh;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .project-title {
+      color: white;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-title h1 {
+      font-size: 3rem;
+      margin: 0;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .project-title p {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      font-weight: 300;
+    }
+
+    .project-content {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .project-section {
+      margin-bottom: 4rem;
+    }
+
+    .project-section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .project-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 3rem;
+      height: 2px;
+      background-color: var(--accent-color);
+    }
+
+    .project-section p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-image {
+      width: 100%;
+      margin: 2rem 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--primary-color);
+      padding: 4rem;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .project-image img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      max-height: 300px;
+      object-fit: contain;
+    }
+
+    .project-image.white-bg {
+      background: var(--secondary-color);
+    }
+
+    @media (max-width: 768px) {
+      .project-title h1 {
+        font-size: 2rem;
+      }
+
+      .project-title p {
+        font-size: 1rem;
+      }
+
+      .project-content {
+        padding: 0 1.5rem;
+      }
+
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">← 戻る</a>
+
+  <header class="project-header">
+    <img src="カメレオンロゴ２-04.png" alt="ロゴ制作">
+    <div class="project-title">
+      <h1>ロゴ制作</h1>
+      <p>企業やサービスの個性を表現するロゴデザイン</p>
+    </div>
+  </header>
+
+  <main class="project-content">
+    <section class="project-section">
+      <h2>プロジェクトの概要</h2>
+      <p>企業やサービスのアイデンティティを視覚的に表現するロゴデザインを制作しています。シンプルでありながら、独自の個性と魅力を持つデザインを追求しています。</p>
+    </section>
+
+    <section class="project-section">
+      <h2>Vivixyロゴ</h2>
+      <p>多様な色彩と変化を表現したVivixyのロゴデザイン。クリエイティブな可能性と革新性を象徴的に表現しています。</p>
+      <div class="project-image">
+        <img src="カメレオンロゴ２-04.png" alt="Vivixyロゴ" style="max-width: 400px;">
+      </div>
+    </section>
+
+    <section class="project-section">
+      <h2>Bye Bye SaaS</h2>
+      <p>シンプルでありながら印象的なロゴデザイン。ペンギンのモチーフを用いて、愛らしさと独創性を表現しています。</p>
+      <div class="project-image white-bg">
+        <img src="バイバイSaaS小白 (1).png" alt="Bye Bye SaaSロゴ" style="max-width: 500px;">
+      </div>
+    </section>
+  </main>
+</body>
+</html> 
