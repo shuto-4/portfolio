@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
-// Your web app's Firebase configuration
+// Firebase設定
 const firebaseConfig = {
   apiKey: "AIzaSyD-HQ6LqNY7PaxLrk-7WFa8pCV-iZ5K7Y4",
   authDomain: "portfolio-ccbf4.firebaseapp.com",
@@ -13,7 +13,7 @@ const firebaseConfig = {
   measurementId: "G-0FWMG0R6N2"
 };
 
-// Initialize Firebase
+// Firebaseの初期化
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
