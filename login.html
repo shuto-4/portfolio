@@ -7,6 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-auth-compat.js"></script>
   <script type="module" src="firebase-config.js"></script>
   <script type="module" src="auth.js"></script>
   <style>
@@ -27,7 +30,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--secondary-color);
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     }
 
     .auth-container {
@@ -239,9 +242,26 @@
         font-size: 1.8rem;
       }
     }
+
+    .password-requirements {
+      display: block;
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+
+    .form-group input:invalid {
+      border-color: #ff4444;
+    }
+
+    .form-group input:invalid:focus {
+      box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.2);
+    }
   </style>
 </head>
 <body>
+  <div id="loading">読み込み中...</div>
+
   <button id="logout-btn" class="logout-button">ログアウト</button>
 
   <div class="auth-container">
@@ -275,7 +295,10 @@
         </div>
         <div class="form-group">
           <label for="register-password">パスワード</label>
-          <input type="password" id="register-password" required autocomplete="new-password">
+          <input type="password" id="register-password" required autocomplete="new-password" minlength="8">
+          <small class="password-requirements">
+            パスワードは8文字以上で、英数字を含める必要があります
+          </small>
         </div>
         <button type="submit" class="button">登録</button>
       </form>
@@ -290,6 +313,21 @@
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
     const logoutBtn = document.getElementById('logout-btn');
+
+    // パスワードのバリデーション関数
+    function validatePassword(password) {
+      const minLength = 8;
+      const hasNumber = /\d/.test(password);
+      const hasLetter = /[a-zA-Z]/.test(password);
+      
+      if (password.length < minLength) {
+        return 'パスワードは8文字以上である必要があります';
+      }
+      if (!hasNumber || !hasLetter) {
+        return 'パスワードは英字と数字を含める必要があります';
+      }
+      return null;
+    }
 
     function showMessage(element, message, isError = false) {
       element.textContent = message;
@@ -318,6 +356,19 @@
         button.textContent = button.originalText;
       }
     }
+
+    // ページ読み込み時の認証チェック
+    firebase.auth().onAuthStateChanged(function(user) {
+      const loading = document.getElementById('loading');
+      
+      if (user) {
+        // ログイン済みの場合はメインページにリダイレクト
+        window.location.href = 'index.html';
+      } else {
+        // 未ログインの場合はローディング表示を消す
+        loading.style.display = 'none';
+      }
+    });
 
     // ログインフォームの処理
     loginForm.addEventListener('submit', async (e) => {
@@ -358,21 +409,46 @@
       const successMessage = document.getElementById('registerSuccess');
       const submitButton = registerForm.querySelector('button[type="submit"]');
 
+      // パスワードのバリデーション
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        showMessage(errorMessage, passwordError, true);
+        return;
+      }
+
       setLoading(submitButton, true);
 
       try {
         await register(email, password);
-        showMessage(successMessage, '登録に成功しました');
+        showMessage(successMessage, '登録が完了しました。ログインページに移動します。');
         errorMessage.style.display = 'none';
         
+        // 登録成功後、自動ログイン
         await login(email, password);
-        logoutBtn.style.display = 'block';
         
         setTimeout(() => {
           window.location.href = 'index.html';
-        }, 1500);
+        }, 2000);
       } catch (error) {
-        showMessage(errorMessage, '登録に失敗しました。別のメールアドレスを試してください。', true);
+        let errorMsg = 'アカウントの作成に失敗しました。';
+        
+        // Firebase認証エラーの日本語化
+        switch(error.code) {
+          case 'auth/email-already-in-use':
+            errorMsg = 'このメールアドレスは既に使用されています。';
+            break;
+          case 'auth/invalid-email':
+            errorMsg = '無効なメールアドレスです。';
+            break;
+          case 'auth/operation-not-allowed':
+            errorMsg = 'アカウント作成が無効になっています。';
+            break;
+          case 'auth/weak-password':
+            errorMsg = 'パスワードが脆弱です。より強力なパスワードを設定してください。';
+            break;
+        }
+        
+        showMessage(errorMessage, errorMsg, true);
         successMessage.style.display = 'none';
       } finally {
         setLoading(submitButton, false);

@@ -8,7 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore-compat.js"></script>
   <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="auth.js"></script>
   <style>
     :root {
       --primary-color: #2c2c2c;
@@ -547,203 +552,250 @@
         font-size: 1.8rem;
       }
     }
+
+    .auth-controls {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .auth-button {
+      padding: 0.5rem 1rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .auth-button:hover {
+      background: #444;
+    }
+
+    #content {
+      display: none;
+    }
+
+    #loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body>
-  <div class="hero-container">
-    <div class="brand">
-      <h1>SHUTO SHIMIZU</h1>
-      <h2>PORTFOLIO</h2>
-      <p>クリエイティブデザインと体験設計を通じて、<br>人々の心に響くソリューションを提供します。</p>
-    </div>
-
-    <div class="hero-main">
-      <img src="profile.jpg" alt="Shuto Shimizu">
-    </div>
-
-    <div class="vertical-text">
-      こころに残る体験設計を
-    </div>
-
-    <div class="menu-button">MENU</div>
-
-    <nav class="navigation">
-      <a href="#works" class="nav-button">制作物</a>
-      <a href="#about" class="nav-button">自己紹介</a>
-      <a href="#skills" class="nav-button">スキル</a>
-    </nav>
+  <div id="loading">読み込み中...</div>
+  
+  <div class="auth-controls">
+    <button id="logoutButton" class="auth-button" style="display: none;">ログアウト</button>
   </div>
 
-  <section id="works" class="works-section">
-    <h2>Works</h2>
-    <div class="works-gallery">
-      <div class="work-item">
-        <a href="service-design.html">
-          <img src="work1.jpeg" alt="CHVロゴデザイン">
-          <div class="work-item-content">
-            <h3>サービス設計 / ブランディング</h3>
-            <p>音楽を通じて人々をつなぐサービスの設計とブランディング</p>
-          </div>
-        </a>
+  <div id="content">
+    <div class="hero-container">
+      <div class="brand">
+        <h1>SHUTO SHIMIZU</h1>
+        <h2>PORTFOLIO</h2>
+        <p>クリエイティブデザインと体験設計を通じて、<br>人々の心に響くソリューションを提供します。</p>
       </div>
-      <div class="work-item">
-        <a href="logo-design.html">
-          <div style="background: var(--primary-color); padding: 2rem; height: 250px; display: flex; align-items: center; justify-content: center;">
-            <img src="カメレオンロゴ２-04.png" alt="Vivixyロゴ" style="width: auto; height: auto; max-height: 100%; object-fit: contain;">
-          </div>
-          <div class="work-item-content">
-            <h3>ロゴ制作</h3>
-            <p>シンプルでありながら印象的なロゴデザイン。ペンギンのモチーフを用いて、愛らしさと独創性を表現しています。</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
 
-  <section id="about" class="about-section">
-    <h2>私について</h2>
-    <div class="about-content">
-      <div class="about-text">
-        <div class="about-name">
-          清水 秀人
-          <div class="about-name-en">SHUTO SHIMIZU</div>
+      <div class="hero-main">
+        <img src="profile.jpg" alt="Shuto Shimizu">
+      </div>
+
+      <div class="vertical-text">
+        こころに残る体験設計を
+      </div>
+
+      <div class="menu-button">MENU</div>
+
+      <nav class="navigation">
+        <a href="#works" class="nav-button">制作物</a>
+        <a href="#about" class="nav-button">自己紹介</a>
+        <a href="#skills" class="nav-button">スキル</a>
+      </nav>
+    </div>
+
+    <section id="works" class="works-section">
+      <h2>Works</h2>
+      <div class="works-gallery">
+        <div class="work-item">
+          <a href="service-design.html">
+            <img src="work1.jpeg" alt="CHVロゴデザイン">
+            <div class="work-item-content">
+              <h3>サービス設計 / ブランディング</h3>
+              <p>音楽を通じて人々をつなぐサービスの設計とブランディング</p>
+            </div>
+          </a>
         </div>
-        <div class="about-description">
-          武蔵野美術大学 クリエイティブイノベーション学科 4年生
+        <div class="work-item">
+          <a href="logo-design.html">
+            <div style="background: var(--primary-color); padding: 2rem; height: 250px; display: flex; align-items: center; justify-content: center;">
+              <img src="カメレオンロゴ２-04.png" alt="Vivixyロゴ" style="width: auto; height: auto; max-height: 100%; object-fit: contain;">
+            </div>
+            <div class="work-item-content">
+              <h3>ロゴ制作</h3>
+              <p>シンプルでありながら印象的なロゴデザイン。ペンギンのモチーフを用いて、愛らしさと独創性を表現しています。</p>
+            </div>
+          </a>
         </div>
-        <div class="about-philosophy">
-          心に残る体験設計のために<br>
-          様々な手法、知見を用いてアプローチしています。<br>
-          多様な分野での経験を通じて、<br>
-          常に新しいデザインを追求しています。
+      </div>
+    </section>
+
+    <section id="about" class="about-section">
+      <h2>私について</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <div class="about-name">
+            清水 秀人
+            <div class="about-name-en">SHUTO SHIMIZU</div>
+          </div>
+          <div class="about-description">
+            武蔵野美術大学 クリエイティブイノベーション学科 4年生
+          </div>
+          <div class="about-philosophy">
+            心に残る体験設計のために<br>
+            様々な手法、知見を用いてアプローチしています。<br>
+            多様な分野での経験を通じて、<br>
+            常に新しいデザインを追求しています。
+          </div>
+        </div>
+        <div class="about-image">
+          <img src="IMG_2533.JPG" alt="Shuto Shimizu">
         </div>
       </div>
-      <div class="about-image">
-        <img src="IMG_2533.JPG" alt="Shuto Shimizu">
+    </section>
+
+    <section id="skills" class="skills-section">
+      <h2>できること</h2>
+      <div class="skills-list">
+        <div class="skills-item">
+          <h3>UI/UXデザイン</h3>
+          <p>ユーザビリティを重視したインターフェースデザイン。<br>
+          ユーザー調査からプロトタイプ作成まで、<br>
+          体験価値を高めるデザインプロセスを実践。</p>
+        </div>
+        <div class="skills-item">
+          <h3>グラフィックデザイン</h3>
+          <p>ロゴ、ブランドアイデンティティ、販促物など、<br>
+          目的に応じた効果的なビジュアルデザイン。<br>
+          クライアントの想いを形にする提案力。</p>
+        </div>
+        <div class="skills-item">
+          <h3>写真・映像制作</h3>
+          <p>商品撮影やポートレートなどの写真撮影、<br>
+          シンプルな映像作品の撮影から編集まで、<br>
+          基本的な制作に対応可能。</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="skills" class="skills-section">
-    <h2>できること</h2>
-    <div class="skills-list">
-      <div class="skills-item">
-        <h3>UI/UXデザイン</h3>
-        <p>ユーザビリティを重視したインターフェースデザイン。<br>
-        ユーザー調査からプロトタイプ作成まで、<br>
-        体験価値を高めるデザインプロセスを実践。</p>
+    <section id="contact" class="contact-section">
+      <h2>お問い合わせ</h2>
+      <div class="contact-container">
+        <div class="contact-box">
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="name">お名前</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">メールアドレス</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">メッセージ</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+
+            <button type="submit" class="button">送信する</button>
+          </form>
+          <p id="success-message" class="message success-message"></p>
+          <p id="error-message" class="message error-message"></p>
+        </div>
       </div>
-      <div class="skills-item">
-        <h3>グラフィックデザイン</h3>
-        <p>ロゴ、ブランドアイデンティティ、販促物など、<br>
-        目的に応じた効果的なビジュアルデザイン。<br>
-        クライアントの想いを形にする提案力。</p>
-      </div>
-      <div class="skills-item">
-        <h3>写真・映像制作</h3>
-        <p>商品撮影やポートレートなどの写真撮影、<br>
-        シンプルな映像作品の撮影から編集まで、<br>
-        基本的な制作に対応可能。</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="contact" class="contact-section">
-    <h2>お問い合わせ</h2>
-    <div class="contact-container">
-      <div class="contact-box">
-        <form id="contact-form">
-          <div class="form-group">
-            <label for="name">お名前</label>
-            <input type="text" id="name" name="name" required>
-          </div>
-
-          <div class="form-group">
-            <label for="email">メールアドレス</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-
-          <div class="form-group">
-            <label for="message">メッセージ</label>
-            <textarea id="message" name="message" required></textarea>
-          </div>
-
-          <button type="submit" class="button">送信する</button>
-        </form>
-        <p id="success-message" class="message success-message"></p>
-        <p id="error-message" class="message error-message"></p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p>THANK YOU</p>
-    <p>お問い合わせ: <a href="mailto:s.shimizu@vivixy.co.jp" style="color: white;">s.shimizu@vivixy.co.jp</a></p>
-  </footer>
+    <footer>
+      <p>THANK YOU</p>
+      <p>お問い合わせ: <a href="mailto:s.shimizu@vivixy.co.jp" style="color: white;">s.shimizu@vivixy.co.jp</a></p>
+    </footer>
+  </div>
 
   <script>
-    function showMessage(element, message) {
-      element.textContent = message;
-      element.style.display = 'block';
-      element.classList.add('show');
-      
-      if (element.classList.contains('success-message')) {
-        setTimeout(() => {
-          element.classList.remove('show');
-          setTimeout(() => {
-            element.style.display = 'none';
-          }, 300);
-        }, 3000);
-      }
-    }
+    // ページ全体のコンテンツを非表示にする
+    document.getElementById('content').style.display = 'none';
 
-    function setLoading(button, isLoading) {
-      if (isLoading) {
-        button.classList.add('loading');
-        button.disabled = true;
-        button.originalText = button.textContent;
-        button.textContent = '';
-      } else {
-        button.classList.remove('loading');
-        button.disabled = false;
-        button.textContent = button.originalText;
-      }
-    }
-
-    document.getElementById('contact-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const submitButton = e.target.querySelector('button[type="submit"]');
-      const successMessage = document.getElementById('success-message');
-      const errorMessage = document.getElementById('error-message');
-      
-      setLoading(submitButton, true);
-
+    // ログアウトボタンのイベントリスナー
+    document.getElementById('logoutButton').addEventListener('click', async () => {
       try {
+        await firebase.auth().signOut();
+        window.location.href = 'login.html';
+      } catch (error) {
+        console.error('ログアウトエラー:', error);
+        alert('ログアウトに失敗しました。');
+      }
+    });
+
+    // 認証状態の監視
+    firebase.auth().onAuthStateChanged(function(user) {
+      const content = document.getElementById('content');
+      const loading = document.getElementById('loading');
+      const logoutButton = document.getElementById('logoutButton');
+
+      if (user) {
+        // ログイン済みの場合
+        console.log('ログイン中のユーザー:', user.email);
+        content.style.display = 'block';
+        logoutButton.style.display = 'block';
+        loading.style.display = 'none';
+      } else {
+        // 未ログインの場合
+        console.log('未ログイン状態です');
+        window.location.href = 'login.html';
+      }
+    });
+
+    // お問い合わせフォームの処理
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const message = document.getElementById('message').value;
 
-        const response = await fetch('/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, message })
-        });
+        try {
+          // Firestoreにデータを保存
+          await firebase.firestore().collection('contacts').add({
+            name: name,
+            email: email,
+            message: message,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          });
 
-        if (response.ok) {
-          showMessage(successMessage, 'お問い合わせを送信しました。');
-          errorMessage.style.display = 'none';
-          e.target.reset();
-        } else {
-          throw new Error('送信に失敗しました');
+          alert('お問い合わせを受け付けました。');
+          contactForm.reset();
+        } catch (error) {
+          console.error('エラーが発生しました:', error);
+          alert('送信に失敗しました。もう一度お試しください。');
         }
-      } catch (error) {
-        showMessage(errorMessage, '送信に失敗しました。時間をおいて再度お試しください。');
-        successMessage.style.display = 'none';
-      } finally {
-        setLoading(submitButton, false);
-      }
-    });
+      });
+    }
 
     // 入力フィールドのフォーカス効果
     document.querySelectorAll('input, textarea').forEach(input => {
