@@ -1009,6 +1009,14 @@
     
     // スクロール時のアニメーション
     window.addEventListener('scroll', handleScrollAnimation);
+
+    // URLハッシュをチェックして、ページトップにスクロール
+    window.addEventListener('load', () => {
+      if (window.location.hash) {
+        window.scrollTo(0, 0);
+        window.history.replaceState(null, null, ' ');
+      }
+    });
   </script>
 </body>
 </html> 
