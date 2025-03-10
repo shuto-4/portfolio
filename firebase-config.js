@@ -14,7 +14,6 @@ const firebaseConfig = {
 };
 
 // Firebaseの初期化
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+firebase.initializeApp(firebaseConfig);
 
 export default app; 
