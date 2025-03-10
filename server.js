@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,7 +26,8 @@ if (missingEnvVars.length > 0) {
 }
 
 // ミドルウェアの設定
-app.use(bodyParser.json());
+app.use(cors());
+app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
 // メール送信の設定
@@ -69,10 +71,12 @@ function validateInput(input) {
 // お問い合わせフォームの処理
 app.post('/contact', limiter, async (req, res) => {
   const { name, email, message } = req.body;
+  console.log('受信したデータ:', { name, email, message });
 
   // 入力値の検証
   const validationError = validateInput({ name, email, message });
   if (validationError) {
+    console.log('バリデーションエラー:', validationError);
     return res.status(400).json({ message: validationError });
   }
 
@@ -98,11 +102,18 @@ IPアドレス: ${req.ip}
     replyTo: email
   };
 
+  console.log('メール送信設定:', {
+    from: mailOptions.from,
+    to: mailOptions.to,
+    subject: mailOptions.subject
+  });
+
   try {
-    await transporter.sendMail(mailOptions);
+    const info = await transporter.sendMail(mailOptions);
+    console.log('メール送信成功:', info);
     res.status(200).json({ message: 'お問い合わせを送信しました。' });
   } catch (error) {
-    console.error('メール送信エラー:', error);
+    console.error('メール送信エラーの詳細:', error);
     res.status(500).json({ message: '送信に失敗しました。時間をおいて再度お試しください。' });
   }
 });

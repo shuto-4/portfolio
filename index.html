@@ -50,6 +50,7 @@
       font-size: 1.8rem;
       margin: 0;
       letter-spacing: 2px;
+      animation: fadeInLeft 1s ease-out;
     }
 
     .brand h2 {
@@ -59,6 +60,7 @@
       margin: 0;
       letter-spacing: 4px;
       color: #666;
+      animation: fadeInLeft 1s ease-out 0.2s backwards;
     }
 
     .brand p {
@@ -66,6 +68,7 @@
       line-height: 1.8;
       margin-top: 2rem;
       font-weight: 300;
+      animation: fadeInLeft 1s ease-out 0.4s backwards;
     }
 
     .menu-button {
@@ -85,10 +88,12 @@
       letter-spacing: 1px;
       cursor: pointer;
       transition: all 0.3s ease;
+      animation: fadeInRight 0.8s ease-out 0.4s backwards;
+      display: none;
     }
 
     .menu-button:hover {
-      transform: scale(1.1);
+      transform: scale(1.1) rotate(5deg);
     }
 
     .hero-main {
@@ -102,6 +107,7 @@
       max-width: 100%;
       height: auto;
       object-fit: cover;
+      animation: scaleIn 1.2s ease-out;
     }
 
     .vertical-text {
@@ -113,6 +119,7 @@
       display: flex;
       align-items: center;
       font-weight: 300;
+      animation: fadeInRight 1s ease-out 0.6s backwards;
     }
 
     .navigation {
@@ -133,11 +140,13 @@
       font-size: 0.9rem;
       letter-spacing: 2px;
       transition: all 0.3s ease;
+      animation: fadeInUp 0.8s ease-out backwards;
     }
 
     .nav-button:hover {
       background: var(--primary-color);
       color: var(--secondary-color);
+      transform: translateY(-2px) scale(1.05);
     }
 
     @media (max-width: 1200px) {
@@ -185,6 +194,14 @@
       font-size: 2.5rem;
       margin-bottom: 4rem;
       color: var(--primary-color);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .works-section h2.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .works-gallery {
@@ -201,11 +218,14 @@
       overflow: hidden;
       box-shadow: var(--soft-shadow);
       transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
 
     .work-item:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
     }
 
     .work-item a {
@@ -254,6 +274,14 @@
       font-size: 2.5rem;
       margin-bottom: 3rem;
       font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .about-section h2.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .about-content {
@@ -340,6 +368,14 @@
       margin-bottom: 4rem;
       color: var(--primary-color);
       font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .skills-section h2.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .skills-list {
@@ -357,11 +393,14 @@
       transition: all 0.3s ease;
       box-shadow: var(--soft-shadow);
       text-align: left;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
 
     .skills-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
     }
 
     .skills-item h3 {
@@ -390,6 +429,14 @@
       margin-bottom: 4rem;
       color: var(--primary-color);
       font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .contact-section h2.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .contact-container {
@@ -404,6 +451,9 @@
       border-radius: 20px;
       box-shadow: var(--soft-shadow);
       transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
 
     .contact-box:hover {
@@ -587,6 +637,172 @@
       align-items: center;
       z-index: 9999;
     }
+
+    /* アニメーションのキーフレーム定義 */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* スクロールアニメーション用のクラス */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .slide-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .slide-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* セクションタイトルのアニメーション */
+    .works-section h2,
+    .about-section h2,
+    .skills-section h2,
+    .contact-section h2 {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .works-section h2.visible,
+    .about-section h2.visible,
+    .skills-section h2.visible,
+    .contact-section h2.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 作品カードのアニメーション */
+    .work-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .work-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* スキルカードのアニメーション */
+    .skills-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .skills-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* お問い合わせフォームのアニメーション */
+    .contact-box {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .contact-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ホバーエフェクトの強化 */
+    .work-item:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .skills-item:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    /* 画像のホバーエフェクト */
+    .hero-main img {
+      transition: transform 0.5s ease-out;
+    }
+
+    .hero-main img:hover {
+      transform: scale(1.05);
+    }
+
+    /* メニューボタンのアニメーション */
+    .menu-button {
+      animation: fadeInRight 0.8s ease-out 0.4s backwards;
+    }
+
+    .menu-button:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
   </style>
 </head>
 <body>
@@ -737,11 +953,27 @@
         const message = document.getElementById('message').value;
 
         try {
-          alert('お問い合わせを受け付けました。\n後ほどご連絡させていただきます。');
-          contactForm.reset();
+          console.log('フォーム送信開始');
+          const response = await fetch('http://localhost:3000/contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, message })
+          });
+
+          const data = await response.json();
+          console.log('サーバーからの応答:', data);
+
+          if (response.ok) {
+            alert('お問い合わせを受け付けました。\n後ほどご連絡させていただきます。');
+            contactForm.reset();
+          } else {
+            throw new Error(data.message || '送信に失敗しました。');
+          }
         } catch (error) {
-          console.error('エラーが発生しました:', error);
-          alert('送信に失敗しました。もう一度お試しください。');
+          console.error('エラーの詳細:', error);
+          alert(`送信に失敗しました。\nエラー: ${error.message}\n\nもう一度お試しください。`);
         }
       });
     }
@@ -756,6 +988,26 @@
         input.parentElement.classList.remove('focused');
       });
     });
+
+    // スクロールアニメーション
+    function handleScrollAnimation() {
+      const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .works-section h2, .about-section h2, .skills-section h2, .contact-section h2, .work-item, .skills-item, .contact-box');
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementBottom = element.getBoundingClientRect().bottom;
+        
+        if (elementTop < window.innerHeight && elementBottom > 0) {
+          element.classList.add('visible');
+        }
+      });
+    }
+
+    // 初期表示時のアニメーション
+    window.addEventListener('load', handleScrollAnimation);
+    
+    // スクロール時のアニメーション
+    window.addEventListener('scroll', handleScrollAnimation);
   </script>
 </body>
 </html> 
