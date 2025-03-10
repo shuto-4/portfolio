@@ -8,12 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore-compat.js"></script>
-  <script src="firebase-config.js"></script>
-  <script src="auth.js"></script>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <style>
     :root {
       --primary-color: #2c2c2c;
@@ -598,10 +593,6 @@
 <body>
   <div id="loading">読み込み中...</div>
   
-  <div class="auth-controls">
-    <button id="logoutButton" class="auth-button" style="display: none;">ログアウト</button>
-  </div>
-
   <div id="content">
     <div class="hero-container">
       <div class="brand">
@@ -736,39 +727,6 @@
   </div>
 
   <script>
-    // ページ全体のコンテンツを非表示にする
-    document.getElementById('content').style.display = 'none';
-
-    // ログアウトボタンのイベントリスナー
-    document.getElementById('logoutButton').addEventListener('click', async () => {
-      try {
-        await firebase.auth().signOut();
-        window.location.href = 'login.html';
-      } catch (error) {
-        console.error('ログアウトエラー:', error);
-        alert('ログアウトに失敗しました。');
-      }
-    });
-
-    // 認証状態の監視
-    firebase.auth().onAuthStateChanged(function(user) {
-      const content = document.getElementById('content');
-      const loading = document.getElementById('loading');
-      const logoutButton = document.getElementById('logoutButton');
-
-      if (user) {
-        // ログイン済みの場合
-        console.log('ログイン中のユーザー:', user.email);
-        content.style.display = 'block';
-        logoutButton.style.display = 'block';
-        loading.style.display = 'none';
-      } else {
-        // 未ログインの場合
-        console.log('未ログイン状態です');
-        window.location.href = 'login.html';
-      }
-    });
-
     // お問い合わせフォームの処理
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
@@ -780,15 +738,7 @@
         const message = document.getElementById('message').value;
 
         try {
-          // Firestoreにデータを保存
-          await firebase.firestore().collection('contacts').add({
-            name: name,
-            email: email,
-            message: message,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          });
-
-          alert('お問い合わせを受け付けました。');
+          alert('お問い合わせを受け付けました。\n後ほどご連絡させていただきます。');
           contactForm.reset();
         } catch (error) {
           console.error('エラーが発生しました:', error);
