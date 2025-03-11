@@ -10,8 +10,8 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports = async (req, res) => {
-  // CORSヘッダーを設定
-  res.setHeader('Access-Control-Allow-Origin', 'https://shuto-4.github.io');
+  // シンプルなCORS設定
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
