@@ -1025,8 +1025,10 @@
           const response = await fetch('https://portfolio-contact-shuto-4.vercel.app/api/contact', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json'
             },
+            mode: 'cors',
+            credentials: 'omit',
             body: JSON.stringify({ name, email, message })
           });
 
