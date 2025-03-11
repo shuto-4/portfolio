@@ -10,6 +10,8 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports = async (req, res) => {
+  console.log('API called:', req.method); // デバッグログ
+
   // CORSヘッダーを設定
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -17,19 +19,31 @@ module.exports = async (req, res) => {
 
   // プリフライトリクエストへの対応
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    return res.status(200).end();
   }
 
+  // POSTメソッド以外は許可しない
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).json({ 
+      error: 'Method not allowed',
+      allowedMethods: ['POST']
+    });
   }
 
   try {
+    console.log('Request body:', req.body); // デバッグログ
+
     const { name, email, message } = req.body;
 
     if (!name || !email || !message) {
-      return res.status(400).json({ message: '必須項目が入力されていません。' });
+      return res.status(400).json({ 
+        error: '必須項目が入力されていません。',
+        missingFields: [
+          !name && 'name',
+          !email && 'email',
+          !message && 'message'
+        ].filter(Boolean)
+      });
     }
 
     const mailOptions = {
@@ -45,9 +59,17 @@ ${message}
     };
 
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: '送信が完了しました。' });
+    
+    return res.status(200).json({
+      message: '送信が完了しました。',
+      success: true
+    });
   } catch (error) {
-    console.error('エラーの詳細:', error);
-    res.status(500).json({ message: 'メールの送信に失敗しました。' });
+    console.error('Error details:', error); // デバッグログ
+    
+    return res.status(500).json({
+      error: 'メールの送信に失敗しました。',
+      details: error.message
+    });
   }
 }; 
