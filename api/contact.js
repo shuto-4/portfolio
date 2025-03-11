@@ -11,14 +11,13 @@ const transporter = nodemailer.createTransport({
 
 module.exports = async (req, res) => {
   // CORSヘッダーを設定
-  res.setHeader('Access-Control-Allow-Origin', 'https://shuto-4.github.io');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
-  res.setHeader('Access-Control-Max-Age', '86400'); // 24時間
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   // プリフライトリクエストへの対応
   if (req.method === 'OPTIONS') {
-    res.status(204).end();
+    res.status(200).end();
     return;
   }
 
