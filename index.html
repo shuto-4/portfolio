@@ -912,26 +912,12 @@
       <h2>お問い合わせ</h2>
       <div class="contact-container">
         <div class="contact-box">
-          <form id="contact-form">
-            <div class="form-group">
-              <label for="name">お名前</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-
-            <div class="form-group">
-              <label for="email">メールアドレス</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-
-            <div class="form-group">
-              <label for="message">メッセージ</label>
-              <textarea id="message" name="message" required></textarea>
-            </div>
-
-            <button type="submit" class="button">送信する</button>
-          </form>
-          <p id="success-message" class="message success-message"></p>
-          <p id="error-message" class="message error-message"></p>
+          <p style="margin-bottom: 2rem; text-align: center;">以下のメールアドレスまでお気軽にお問い合わせください。</p>
+          <div style="text-align: center;">
+            <a href="mailto:s.shimizu@vivixy.co.jp" class="button" style="display: inline-block; text-decoration: none; max-width: 300px;">
+              メールを送信する
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -943,65 +929,6 @@
   </div>
 
   <script>
-    // お問い合わせフォームの処理
-    const contactForm = document.getElementById('contact-form');
-    const successMessage = document.getElementById('success-message');
-    const errorMessage = document.getElementById('error-message');
-
-    if (contactForm) {
-      contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.classList.add('loading');
-        
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
-
-        try {
-          const response = await fetch('http://localhost:3000/contact', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, message })
-          });
-
-          const data = await response.json();
-
-          if (response.ok) {
-            successMessage.textContent = 'お問い合わせを受け付けました。';
-            successMessage.style.display = 'block';
-            errorMessage.style.display = 'none';
-            contactForm.reset();
-          } else {
-            throw new Error(data.message || '送信に失敗しました。');
-          }
-        } catch (error) {
-          console.error('エラーの詳細:', error);
-          errorMessage.textContent = `送信に失敗しました。${error.message}`;
-          errorMessage.style.display = 'block';
-          successMessage.style.display = 'none';
-        } finally {
-          submitButton.disabled = false;
-          submitButton.classList.remove('loading');
-        }
-      });
-    }
-
-    // 入力フィールドのフォーカス効果
-    document.querySelectorAll('input, textarea').forEach(input => {
-      input.addEventListener('focus', () => {
-        input.parentElement.classList.add('focused');
-      });
-      
-      input.addEventListener('blur', () => {
-        input.parentElement.classList.remove('focused');
-      });
-    });
-
     // スクロールアニメーション
     function handleScrollAnimation() {
       const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .works-section h2, .about-section h2, .skills-section h2, .contact-section h2, .work-item, .skills-item, .contact-box');
