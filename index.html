@@ -1027,30 +1027,20 @@
             headers: {
               'Content-Type': 'application/json'
             },
-            mode: 'cors',
-            credentials: 'omit',
             body: JSON.stringify({ name, email, message })
           });
 
           const data = await response.json();
 
           if (response.ok) {
-            // フォームを非表示にする
-            contactForm.classList.add('form-hidden');
-            
-            // 成功メッセージを表示
-            successMessage.style.display = 'block';
-            // アニメーションのために少し遅延を入れる
-            setTimeout(() => {
-              successMessage.classList.add('show');
-            }, 100);
+            alert('送信が完了しました');
+            contactForm.reset();
           } else {
             throw new Error(data.message || '送信に失敗しました。');
           }
         } catch (error) {
           console.error('エラーの詳細:', error);
-          errorMessage.textContent = `送信に失敗しました。${error.message}`;
-          errorMessage.style.display = 'block';
+          alert('送信に失敗しました。');
         } finally {
           submitButton.disabled = false;
           submitButton.classList.remove('loading');
