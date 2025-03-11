@@ -538,9 +538,8 @@
     }
 
     .success-message {
-      background: rgba(76, 175, 80, 0.1);
-      color: #4CAF50;
       display: none;
+      background: rgba(76, 175, 80, 0.1);
       padding: 2rem;
       text-align: center;
       border-radius: 8px;
@@ -991,7 +990,7 @@
             <h3>送信完了</h3>
             <p>お問い合わせありがとうございます。<br>内容を確認次第、ご連絡させていただきます。</p>
           </div>
-          <p id="error-message" class="message error-message"></p>
+          <div id="error-message" class="message error-message"></div>
         </div>
       </div>
     </section>
@@ -1015,6 +1014,7 @@
         const submitButton = contactForm.querySelector('button[type="submit"]');
         submitButton.disabled = true;
         submitButton.classList.add('loading');
+        errorMessage.style.display = 'none';
         
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
@@ -1033,14 +1033,20 @@
 
           if (response.ok) {
             // フォームを非表示にする
-            contactForm.style.display = 'none';
-            // 成功メッセージを表示
-            successMessage.style.display = 'block';
-            // アニメーションのために少し遅延を入れる
+            contactForm.style.opacity = '0';
+            contactForm.style.transform = 'translateY(-20px)';
+            contactForm.style.transition = 'all 0.3s ease';
+            
+            // 少し遅延を入れてからフォームを完全に非表示に
             setTimeout(() => {
-              successMessage.classList.add('show');
-            }, 100);
-            errorMessage.style.display = 'none';
+              contactForm.style.display = 'none';
+              // 成功メッセージを表示
+              successMessage.style.display = 'block';
+              // アニメーションのために少し遅延を入れる
+              requestAnimationFrame(() => {
+                successMessage.classList.add('show');
+              });
+            }, 300);
           } else {
             throw new Error(data.message || '送信に失敗しました。');
           }
@@ -1048,7 +1054,6 @@
           console.error('エラーの詳細:', error);
           errorMessage.textContent = `送信に失敗しました。${error.message}`;
           errorMessage.style.display = 'block';
-          successMessage.style.display = 'none';
         } finally {
           submitButton.disabled = false;
           submitButton.classList.remove('loading');
