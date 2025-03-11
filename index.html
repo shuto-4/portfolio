@@ -945,16 +945,22 @@
   <script>
     // お問い合わせフォームの処理
     const contactForm = document.getElementById('contact-form');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+
     if (contactForm) {
       contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.classList.add('loading');
         
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const message = document.getElementById('message').value;
 
         try {
-          console.log('フォーム送信開始');
           const response = await fetch('http://localhost:3000/contact', {
             method: 'POST',
             headers: {
@@ -964,17 +970,23 @@
           });
 
           const data = await response.json();
-          console.log('サーバーからの応答:', data);
 
           if (response.ok) {
-            alert('お問い合わせを受け付けました。\n後ほどご連絡させていただきます。');
+            successMessage.textContent = 'お問い合わせを受け付けました。';
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
             contactForm.reset();
           } else {
             throw new Error(data.message || '送信に失敗しました。');
           }
         } catch (error) {
           console.error('エラーの詳細:', error);
-          alert(`送信に失敗しました。\nエラー: ${error.message}\n\nもう一度お試しください。`);
+          errorMessage.textContent = `送信に失敗しました。${error.message}`;
+          errorMessage.style.display = 'block';
+          successMessage.style.display = 'none';
+        } finally {
+          submitButton.disabled = false;
+          submitButton.classList.remove('loading');
         }
       });
     }
